@@ -3,10 +3,10 @@ import pandas as pd
 import geopandas
 import folium
 import geodatasets
-import matplotlib.pyplot as plt
-from folium.plugins import HeatMap
 import streamlit as st
 from streamlit_folium import st_folium
+from streamlit_folium import folium_static
+from folium.plugins import MarkerCluster
 
 ## FOLIUM MAPPING
 
@@ -25,31 +25,49 @@ geo_df_list = [[point.xy[1][0], point.xy[0][0]] for point in geo_df.geometry]
 
 
 # OpenStreetMap
-map = folium.Map(location=[-.5, 111.5], tiles="OpenStreetMap", zoom_start=8)
+#map = folium.Map(location=[-.5, 111.5], tiles="OpenStreetMap", zoom_start=8)
 # Iterate through list and add a marker for each volcano, color-coded by its type.
-i = 0
-for coordinates in geo_df_list:
-    map.add_child(
-        folium.Marker(
-            location=coordinates,
-            popup="Satellite: "
-            + str(geo_df.satellite[i])
-            + "<br>"
-            + "Date: "
-            + str(geo_df.acq_date[i])
-            + "<br>"
-            + "Confidence: "
-            + str(geo_df.confidence[i])
-            + "<br>"
-            + "Coordinates: "
-            + str(geo_df_list[i])
-            + "<br>"
-            + "<a href=https://www.google.com/maps/search/?api=1&query="+str(geo_df_list[i][0])+","+str(geo_df_list[i][1])+">Get Direction</a>",
-            icon=folium.Icon(),
-        )
-    )
-    i = i + 1
-map
+
+#map
 
 
-st_data = st_folium(map, width=700)
+#st_data = st_folium(map, width=700)
+
+
+def create_map():
+    if 'map' not in st.session_state or st.session_state.map is None:
+        m = folium.Map(location=[-.5, 111.5], tiles="OpenStreetMap", zoom_start=8)
+        
+        #marker_cluster = MarkerCluster().add_to(m)
+        #folium.Marker(location=[45.372, -121.6972], popup="Mt. Hood Meadows").add_to(marker_cluster)
+        i = 0
+        for coordinates in geo_df_list:
+            m.add_child(
+                folium.Marker(
+                    location=coordinates,
+                    popup="Satellite: "
+                    + str(geo_df.satellite[i])
+                    + "<br>"
+                    + "Date: "
+                    + str(geo_df.acq_date[i])
+                    + "<br>"
+                    + "Confidence: "
+                    + str(geo_df.confidence[i])
+                    + "<br>"
+                    + "Coordinates: "
+                    + str(geo_df_list[i])
+                    + "<br>"
+                    + "<a href=https://www.google.com/maps/search/?api=1&query="+str(geo_df_list[i][0])+","+str(geo_df_list[i][1])+">Get Direction</a>",
+                    icon=folium.Icon(),
+                )
+            )
+            i = i + 1
+        
+        st.session_state.map = m  # Save the map in the session state
+    return st.session_state.map
+
+def show_map():
+    m = create_map()  # Get or create the map
+    folium_static(m)
+
+show_map()
