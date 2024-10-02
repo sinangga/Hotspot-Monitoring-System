@@ -58,8 +58,8 @@ def create_map():
                     + "Coordinates: "
                     + str(geo_df_list[i])
                     + "<br>"
-                    + st.link_button("Direction","https://maps.google.com/?ll="+str(geo_df_list[i][0])+","+str(geo_df_list[i][1])),
-                    #+ "<a href={url}><button style="backgroundcolor:GreenYellow;">Get Direction</button></a>",
+                    #+ st.link_button("Direction","https://maps.google.com/?ll="+str(geo_df_list[i][0])+","+str(geo_df_list[i][1])),
+                    + "<a href={url}><button style="">Get Direction</button></a>",
                     icon=folium.Icon(),
                 )
             )
