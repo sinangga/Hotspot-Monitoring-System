@@ -23,9 +23,6 @@ geo_df = geopandas.GeoDataFrame(
 # Create a geometry list from the GeoDataFrame
 geo_df_list = [[point.xy[1][0], point.xy[0][0]] for point in geo_df.geometry]
 
-# OpenStreetMap
-map = folium.Map(location=[-.5, 111.5], tiles="OpenStreetMap", zoom_start=8)
-
 # Iterate through list and add a marker for each volcano, color-coded by its type.
 i = 0
 for coordinates in geo_df_list:
@@ -51,6 +48,8 @@ for coordinates in geo_df_list:
         )
     )
     i = i + 1
-map
+# map
+# OpenStreetMap
+map = folium.Map(location=[-.5, 111.5], tiles="OpenStreetMap", zoom_start=8)
 
 st_data = st_folium(map)
