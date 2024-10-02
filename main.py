@@ -5,6 +5,10 @@ import folium
 import geodatasets
 import matplotlib.pyplot as plt
 from folium.plugins import HeatMap
+import streamlit as st
+from streamlit_folium import st_folium
+
+## FOLIUM MAPPING
 
 
 # Let's set your map key that was emailed to you. It should look something like 'abcdef1234567890abcdef1234567890'
@@ -16,12 +20,11 @@ geometry = geopandas.points_from_xy(df_idn.longitude, df_idn.latitude)
 geo_df = geopandas.GeoDataFrame(
     df_idn[["country_id","latitude","longitude","brightness","scan","track","acq_date","acq_time","satellite","instrument","confidence","version","bright_t31","frp","daynight"]], geometry=geometry
 )
-
+# Create a geometry list from the GeoDataFrame
+geo_df_list = [[point.xy[1][0], point.xy[0][0]] for point in geo_df.geometry]
 
 # OpenStreetMap
 map = folium.Map(location=[-.5, 111.5], tiles="OpenStreetMap", zoom_start=8)
-# Create a geometry list from the GeoDataFrame
-geo_df_list = [[point.xy[1][0], point.xy[0][0]] for point in geo_df.geometry]
 
 # Iterate through list and add a marker for each volcano, color-coded by its type.
 i = 0
@@ -49,3 +52,5 @@ for coordinates in geo_df_list:
     )
     i = i + 1
 map
+
+st_data = st_folium(map)
