@@ -42,6 +42,7 @@ def create_map():
         #folium.Marker(location=[45.372, -121.6972], popup="Mt. Hood Meadows").add_to(marker_cluster)
         i = 0
         for coordinates in geo_df_list:
+            url = "https://maps.google.com/?ll="+str(geo_df_list[i][0])+","+str(geo_df_list[i][1])
             m.add_child(
                 folium.Marker(
                     location=coordinates,
@@ -57,7 +58,8 @@ def create_map():
                     + "Coordinates: "
                     + str(geo_df_list[i])
                     + "<br>"
-                    + "<a href=https://maps.google.com/?ll="+str(geo_df_list[i][0])+","+str(geo_df_list[i][1])+">Get Direction</a>",
+                    + st.link_button("Direction",url),
+                    #+ "<a href={url}><button style="backgroundcolor:GreenYellow;">Get Direction</button></a>",
                     icon=folium.Icon(),
                 )
             )
