@@ -57,7 +57,7 @@ def create_map():
                     + "Coordinates: "
                     + str(geo_df_list[i])
                     + "<br>"
-                    + "<a href=https://www.google.com/maps/search/?api=1&query="+str(geo_df_list[i][0])+","+str(geo_df_list[i][1])+">Get Direction</a>",
+                    + "<a href=https://maps.google.com/?ll="+str(geo_df_list[i][0])+","+str(geo_df_list[i][1])+">Get Direction</a>",
                     icon=folium.Icon(),
                 )
             )
