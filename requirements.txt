@@ -1,0 +1,6 @@
+pandas
+geopandas
+folium
+geodatasets
+matplotlib
+pyplot
