@@ -4,4 +4,3 @@ folium
 geodatasets
 matplotlib
 streamlit_folium
-folium.plugins
